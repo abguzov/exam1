@@ -1,0 +1,121 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int health = int.Parse(Console.ReadLine());
+        int[] dimentions = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        int row = dimentions[0];
+        int col = dimentions[1];
+        char[,] matrix = new char[row, col];
+        int healthLeft = health;
+        int turns = 0;
+
+        for (int i = 0; i < row; i++)
+        {
+            char[] line = Console.ReadLine().ToCharArray();
+            for (int j = 0; j < col; j++)
+            {
+                matrix[i, j] = line[j];
+            }
+        }
+        for (int j = 0; j < col; j++)
+        {
+            
+            if (j % 2 == 0)
+            {
+
+                for (int i = 0; i < row; i++)
+                {
+                    if (matrix[i, j] == 'T')
+                    {
+                        turns++;
+                        turns += 2;
+                        
+                    }
+                    else
+                    {
+                        if (matrix[i, j] == 'F')
+                        {
+                           
+                            turns++;
+                            health -= turns / 2;
+                          
+                        }
+                        if (matrix[i, j] == 'H')
+                        {
+                            turns++;
+                            health += turns / 3;
+                           
+                        }
+                        if (matrix[i, j] == 'E')
+                        {
+                          
+                            turns++;                          
+                           
+                        }
+                        if (health <= 0)
+                        {
+                            Console.WriteLine("Died at: [{0}, {1}]", i, j);
+                            break;
+                        }
+                        
+                    }
+                }
+            }
+            if (j % 2 != 0)
+            {
+                for (int i = row - 1; i >= 0; i--)
+                {
+                    if (matrix[i, j] == 'T')
+                    {
+                        turns += 2;
+                        turns++;
+                    }
+                    else
+                    {
+                        if (matrix[i, j] == 'F')
+                        {
+                           
+                            turns++;
+                            health -= turns / 2;
+                           
+                        }
+                        if (matrix[i, j] == 'H')
+                        {
+                            turns++;
+                            health += turns / 3;
+                           
+                        }
+                        if (matrix[i, j] == 'E')
+                        {
+                            
+                            turns++;
+                        }
+                        if (health <= 0)
+                        {
+                            Console.WriteLine("Died at: [{0}, {1}]", i, j);
+                            break;
+                        }
+                    }
+                }
+            }
+            if (health <= 0)
+            {
+                break;
+            }
+        }
+        if (health >= 0)
+        {
+            Console.WriteLine("Quest completed!");
+            Console.WriteLine("Health: {0}", health);
+            Console.WriteLine("Turns: {0}", turns);
+        }
+    }
+}
+
+
+
